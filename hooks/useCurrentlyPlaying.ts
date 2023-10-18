@@ -1,6 +1,6 @@
 'use client';
 
-import querystring from 'querystring';
+import * as querystring from 'querystring';
 import { Context, useCallback, useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import { apiTokenEndpoint, currentlyPlayingEndpoint, queryRefetchInterval } from '../constants';

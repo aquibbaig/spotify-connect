@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@types/node": "^20.8.7",
+    "querystring": "^0.2.1",
+    "react": "^18.2.0",
+    "react-query": "^3.39.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.29"
+  }
+}
