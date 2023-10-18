@@ -1,4 +1,27 @@
 {
+  "name": "spotify-connect",
+  "description": "Get useful analytics from the spotify API in your React app",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquibbaig/spotify-connect.git"
+  },
+  "keywords": [
+    "spotify",
+    "nextjs",
+    "rfc",
+    "playlist"
+  ],
+  "author": "Aquib Baig",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aquibbaig/spotify-connect/issues"
+  },
+  "homepage": "https://github.com/aquibbaig/spotify-connect#readme",
   "dependencies": {
     "@types/node": "^20.8.7",
     "querystring": "^0.2.1",
