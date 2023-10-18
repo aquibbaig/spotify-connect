@@ -1,4 +1,4 @@
-# Spotify Connect Analytics for React Applications
+# spotify-connect
 
 Integrate Spotify analytics into your React application to provide real-time analytics.
 This guide demonstrates how to use the Spotify API to retrieve and parse data on the currently playing track in your React or React Server Components application.
