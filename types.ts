@@ -4,7 +4,7 @@ export type TSpotifyConnectContext = {
   refreshToken: string | undefined;
 };
 
-type TSpotifyTrack = {
+export type TSpotifyTrack = {
   album: {
     album_type: string;
     artists: [
@@ -86,5 +86,20 @@ export type TCurrentlyPlayingTrack = {
       resuming: boolean;
     };
   };
+  is_playing: boolean;
+};
+
+export type TParsedCurrentlyPlayingTrack = {
+  track: {
+    id: TSpotifyTrack["id"];
+    name: TSpotifyTrack["name"];
+    artist: TSpotifyTrack["artists"];
+    album: TSpotifyTrack["album"]['name'];
+    image: TSpotifyTrack["album"]["images"][0]['url'];
+    duration: TSpotifyTrack["duration_ms"];
+    progress: number;
+    uri: TSpotifyTrack["uri"];
+  } | null;
+  timestamp: number | null;
   is_playing: boolean;
 };

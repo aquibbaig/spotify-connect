@@ -1,7 +1,7 @@
 {
   "name": "spotify-connect",
   "description": "Get useful analytics from the spotify API in your React app",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

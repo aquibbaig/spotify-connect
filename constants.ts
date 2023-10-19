@@ -1,12 +1,16 @@
-import { TCurrentlyPlayingTrack } from './types';
+import { TCurrentlyPlayingTrack, TParsedCurrentlyPlayingTrack } from './types';
 
 export const currentlyPlayingEndpoint = `https://api.spotify.com/v1/me/player/currently-playing`;
 export const apiTokenEndpoint = `https://accounts.spotify.com/api/token`;
-export const queryRefetchInterval = 5000;
+export const queryRefetchInterval = 10*1000;
 
-export const parseCurrentlyPlayingTrack = (data: TCurrentlyPlayingTrack) => {
+export const parseCurrentlyPlayingTrack = (data: TCurrentlyPlayingTrack | undefined): TParsedCurrentlyPlayingTrack => {
   if (!data || !data.item) {
-    return null;
+    return {
+      track: null,
+      timestamp: null,
+      is_playing: false,
+    };
   }
 
   const { item, progress_ms, timestamp } = data;
@@ -23,5 +27,6 @@ export const parseCurrentlyPlayingTrack = (data: TCurrentlyPlayingTrack) => {
       uri: item.uri,
     },
     timestamp,
+    is_playing: true,
   };
 };
