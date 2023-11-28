@@ -1,18 +1,13 @@
-'use client';
+"use client";
 
-import { createContext } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-type TSpotifyConnectContext = {
-  clientId: string | undefined;
-  clientSecret: string | undefined;
-  refreshToken: string | undefined;
-};
+import { createContext } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { TSpotifyConnectContext } from "../types";
 
 export const SpotifyConnectContext = createContext<TSpotifyConnectContext>({
-  clientId: '',
-  clientSecret: '',
-  refreshToken: '',
+  clientId: "",
+  clientSecret: "",
+  refreshToken: "",
 });
 
 export const SpotifyConnectContextProvider = ({

@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "spotify-connect": ["./src"]
+    },
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
   }
 }
