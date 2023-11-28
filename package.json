@@ -2,8 +2,14 @@
   "name": "spotify-connect",
   "description": "Get useful analytics from the spotify API in your React app",
   "version": "1.1.0",
-  "main": "index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,7 +22,6 @@
     "rfc",
     "playlist"
   ],
-  "types": "types.ts",
   "author": "Aquib Baig",
   "license": "MIT",
   "bugs": {
@@ -30,6 +35,8 @@
     "react-query": "^3.39.3"
   },
   "devDependencies": {
-    "@types/react": "^18.2.29"
+    "@types/react": "^18.2.29",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.2"
   }
 }

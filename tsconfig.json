@@ -4,6 +4,8 @@
     "baseUrl": ".",
     "paths": {
       "spotify-connect": ["./src"]
-    }
+    },
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
   }
 }
