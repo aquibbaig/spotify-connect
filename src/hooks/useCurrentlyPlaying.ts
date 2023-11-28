@@ -3,8 +3,8 @@
 import * as querystring from 'querystring';
 import { Context, useCallback, useContext, useState } from 'react';
 import { useQuery } from 'react-query';
-import { apiTokenEndpoint, currentlyPlayingEndpoint, queryRefetchInterval } from '../constants';
-import { SpotifyConnectContext } from '../context/SpotifyConnect.context';
+import { SpotifyConnectContext } from '../../context/SpotifyConnect.context';
+import { apiTokenEndpoint, currentlyPlayingEndpoint, queryRefetchInterval } from '../../src/constants';
 import { TCurrentlyPlayingTrack } from '../types';
 
 const useContextWithError = <T>(context: Context<T>) => {

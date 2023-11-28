@@ -16,6 +16,7 @@
     "rfc",
     "playlist"
   ],
+  "types": "types.ts",
   "author": "Aquib Baig",
   "license": "MIT",
   "bugs": {

@@ -1,5 +1,5 @@
-export { parseCurrentlyPlayingTrack } from './constants';
 export { SpotifyConnectContextProvider } from './context/SpotifyConnect.context';
-export { useCurrentlyPlaying } from './hooks/useCurrentlyPlaying';
-export { TSpotifyTrack } from './types';
+export { parseCurrentlyPlayingTrack } from './src/constants';
+export { useCurrentlyPlaying } from './src/hooks/useCurrentlyPlaying';
+export { TSpotifyTrack } from './src/types';
 

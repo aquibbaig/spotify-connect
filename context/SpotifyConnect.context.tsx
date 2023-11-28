@@ -2,12 +2,7 @@
 
 import { createContext } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
-type TSpotifyConnectContext = {
-  clientId: string | undefined;
-  clientSecret: string | undefined;
-  refreshToken: string | undefined;
-};
+import { TSpotifyConnectContext } from 'spotify-connect/src/types';
 
 export const SpotifyConnectContext = createContext<TSpotifyConnectContext>({
   clientId: '',
