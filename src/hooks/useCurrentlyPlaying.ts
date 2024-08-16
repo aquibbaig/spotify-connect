@@ -1,6 +1,5 @@
 "use client";
 
-import * as querystring from "querystring";
 import { Context, useCallback, useContext, useState } from "react";
 import { useQuery } from "react-query";
 import {
@@ -38,10 +37,10 @@ export const useCurrentlyPlaying = (refetchInterval = queryRefetchInterval) => {
         Authorization: `Basic ${basic}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: querystring.stringify({
+      body: new URLSearchParams({
         grant_type: "refresh_token",
         refresh_token: refreshToken,
-      }),
+      }).toString()
     });
 
     if (response.status === 401) {
