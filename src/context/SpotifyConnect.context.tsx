@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { TSpotifyConnectContext } from "../types";

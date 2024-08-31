@@ -1,5 +1,6 @@
 import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import replace from "@rollup/plugin-replace";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import cleaner from "rollup-plugin-cleaner";
@@ -23,13 +24,21 @@ const rollupConfig = [
     ],
     plugins: [
       external(),
-      resolve(),
+      nodeResolve(),
       commonjs(),
-      terser(),
+      terser({
+        compress: {
+          directives: false,
+        },
+      }),
       cleaner({
         targets: ["./dist/"],
       }),
       typescript(),
+      replace({
+        preventAssignment: false,
+        "process.env.NODE_ENV": '"development"',
+      }),
     ],
   },
 ];

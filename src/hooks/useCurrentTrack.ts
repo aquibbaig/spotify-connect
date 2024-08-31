@@ -1,5 +1,3 @@
-"use client";
-
 import { Context, useCallback, useContext, useState } from "react";
 import { useQuery } from "react-query";
 import {
@@ -40,7 +38,7 @@ export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
       body: new URLSearchParams({
         grant_type: "refresh_token",
         refresh_token: refreshToken,
-      }).toString()
+      }).toString(),
     });
 
     if (response.status === 401) {
