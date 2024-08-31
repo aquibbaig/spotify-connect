@@ -5,7 +5,9 @@
     "paths": {
       "spotify-connect": ["./src"]
     },
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext"
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "node"
   }
 }
