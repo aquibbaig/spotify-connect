@@ -4,25 +4,25 @@ import { Context, useCallback, useContext, useState } from "react";
 import { useQuery } from "react-query";
 import {
   apiTokenEndpoint,
-  currentlyPlayingEndpoint,
+  currentTrackEndpoint,
   queryRefetchInterval,
-} from "../../src/constants";
+} from "../constants";
 import { SpotifyConnectContext } from "../context/SpotifyConnect.context";
-import { TCurrentlyPlayingTrack } from "../types";
+import { TCurrentTrack } from "../types";
 
 const useContextWithError = <T>(context: Context<T>) => {
   const contextValue = useContext<T>(context);
 
   if (!contextValue) {
     throw new Error(
-      `useCurrentlyPlaying must be used within a SpotifyConnectContextProvider`
+      `useCurrentTrack must be used within a SpotifyConnectContextProvider`
     );
   }
 
   return contextValue;
 };
 
-export const useCurrentlyPlaying = (refetchInterval = queryRefetchInterval) => {
+export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
   const { clientId, clientSecret, refreshToken } = useContextWithError(
     SpotifyConnectContext
   );
@@ -50,15 +50,15 @@ export const useCurrentlyPlaying = (refetchInterval = queryRefetchInterval) => {
     return response.json();
   }, []);
 
-  return useQuery<TCurrentlyPlayingTrack>(
-    ["currently-playing"],
+  return useQuery<TCurrentTrack>(
+    ["current-track"],
     async () => {
-      const fetchCurrentlyPlaying = async ({
+      const fetchCurrentTrack = async ({
         accessToken,
       }: {
         accessToken: string;
       }) => {
-        const response = await fetch(currentlyPlayingEndpoint, {
+        const response = await fetch(currentTrackEndpoint, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -79,9 +79,9 @@ export const useCurrentlyPlaying = (refetchInterval = queryRefetchInterval) => {
           throw new Error("Invalid access token");
         }
 
-        return fetchCurrentlyPlaying({ accessToken: access_token });
+        return fetchCurrentTrack({ accessToken: access_token });
       } else {
-        return fetchCurrentlyPlaying({ accessToken });
+        return fetchCurrentTrack({ accessToken });
       }
     },
     {

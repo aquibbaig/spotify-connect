@@ -68,7 +68,7 @@ export type TSpotifyTrack = {
   uri: string;
 };
 
-export type TCurrentlyPlayingTrack = {
+export type TCurrentTrack = {
   timestamp: number;
   context: {
     external_urls: {
@@ -89,7 +89,7 @@ export type TCurrentlyPlayingTrack = {
   is_playing: boolean;
 };
 
-export type TParsedCurrentlyPlayingTrack = {
+export type TParsedCurrentTrack = {
   track: {
     id: TSpotifyTrack["id"];
     name: TSpotifyTrack["name"];
