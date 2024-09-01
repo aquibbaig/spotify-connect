@@ -1,6 +1,4 @@
-/// <reference types="react" />
 import * as react_jsx_runtime from 'react/jsx-runtime';
-import * as react_query from 'react-query';
 
 type TSpotifyConnectContext = {
     clientId: string | undefined;
@@ -95,8 +93,8 @@ type TParsedCurrentTrack = {
         id: TSpotifyTrack["id"];
         name: TSpotifyTrack["name"];
         artist: TSpotifyTrack["artists"];
-        album: TSpotifyTrack["album"]['name'];
-        image: TSpotifyTrack["album"]["images"][0]['url'];
+        album: TSpotifyTrack["album"]["name"];
+        image: TSpotifyTrack["album"]["images"][0]["url"];
         duration: TSpotifyTrack["duration_ms"];
         progress: number;
         uri: TSpotifyTrack["uri"];
@@ -111,6 +109,10 @@ declare const SpotifyConnectContextProvider: ({ children, clientId, clientSecret
     children: React.ReactNode;
 } & TSpotifyConnectContext) => react_jsx_runtime.JSX.Element;
 
-declare const useCurrentTrack: (refetchInterval?: number) => react_query.UseQueryResult<TCurrentTrack, unknown>;
+declare const useCurrentTrack: (refetchInterval?: number) => {
+    data: TCurrentTrack;
+    loading: boolean;
+    error: Error;
+};
 
 export { SpotifyConnectContextProvider, type TSpotifyTrack, parseCurrentTrack, useCurrentTrack };

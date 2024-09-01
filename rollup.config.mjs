@@ -30,11 +30,7 @@ const rollupConfig = [
       external(),
       nodeResolve(),
       commonjs(),
-      terser({
-        compress: {
-          directives: false,
-        },
-      }),
+      terser(),
       typescript({
         tsconfig: "./tsconfig.json",
         useTsconfigDeclarationDir: true,
@@ -44,6 +40,13 @@ const rollupConfig = [
         "process.env.NODE_ENV": '"development"',
       }),
     ],
+    /**
+     * When you build a library that should use host's runtime, in your case react and react-dom, you have to externalize them.
+     * remove react and react-dom from dependencies and put them into devDependencies and peerDependencies instead.
+     * devDependencies signal that you use react for development locally,
+     * and peerDependencies signal that for production, react will be provided by the host app.
+     */
+    external: ["react", "react-dom"],
   },
   {
     input: "./dist/dts/index.d.ts",

@@ -91,8 +91,8 @@ export type TParsedCurrentTrack = {
         id: TSpotifyTrack["id"];
         name: TSpotifyTrack["name"];
         artist: TSpotifyTrack["artists"];
-        album: TSpotifyTrack["album"]['name'];
-        image: TSpotifyTrack["album"]["images"][0]['url'];
+        album: TSpotifyTrack["album"]["name"];
+        image: TSpotifyTrack["album"]["images"][0]["url"];
         duration: TSpotifyTrack["duration_ms"];
         progress: number;
         uri: TSpotifyTrack["uri"];

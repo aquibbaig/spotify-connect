@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { TSpotifyConnectContext } from "../types";
 
 export const SpotifyConnectContext = createContext<TSpotifyConnectContext>({
@@ -16,19 +15,15 @@ export const SpotifyConnectContextProvider = ({
 }: {
   children: React.ReactNode;
 } & TSpotifyConnectContext) => {
-  const queryClient = new QueryClient();
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <SpotifyConnectContext.Provider
-        value={{
-          clientId,
-          clientSecret,
-          refreshToken,
-        }}
-      >
-        {children}
-      </SpotifyConnectContext.Provider>
-    </QueryClientProvider>
+    <SpotifyConnectContext.Provider
+      value={{
+        clientId,
+        clientSecret,
+        refreshToken,
+      }}
+    >
+      {children}
+    </SpotifyConnectContext.Provider>
   );
 };

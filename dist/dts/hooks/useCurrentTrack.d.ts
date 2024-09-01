@@ -1,2 +1,6 @@
 import { TCurrentTrack } from "../types";
-export declare const useCurrentTrack: (refetchInterval?: number) => import("react-query").UseQueryResult<TCurrentTrack, unknown>;
+export declare const useCurrentTrack: (refetchInterval?: number) => {
+    data: TCurrentTrack;
+    loading: boolean;
+    error: Error;
+};
