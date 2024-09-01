@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
+    "declaration": true,
     "baseUrl": ".",
+    "declarationDir": "dist/dts",
     "paths": {
       "spotify-connect": ["./src"]
     },
