@@ -102,6 +102,3 @@ export type TParsedCurrentTrack = {
     timestamp: number | null;
     is_playing: boolean;
 };
-export declare const getAccessToken: (authToken: string, refreshToken: string) => Promise<{
-    access_token: string;
-}>;

@@ -114,7 +114,7 @@ declare const SpotifyConnectContextProvider: ({ children, clientId, clientSecret
 declare const useCurrentTrack: (refetchInterval?: number) => {
     data: TCurrentTrack;
     loading: boolean;
-    error: Error;
+    error: Error | null;
 };
 
 export { SpotifyConnectContextProvider, type TSpotifyTrack, parseCurrentTrack, useCurrentTrack };

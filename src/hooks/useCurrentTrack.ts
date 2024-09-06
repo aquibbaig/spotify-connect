@@ -1,11 +1,8 @@
-import { Context, useCallback, useContext } from "react";
-import {
-  apiTokenEndpoint,
-  currentTrackEndpoint,
-  queryRefetchInterval,
-} from "../constants";
+import { Context, useCallback, useContext, useEffect, useMemo } from "react";
+import { currentTrackEndpoint, queryRefetchInterval } from "../constants";
 import { SpotifyConnectContext } from "../context/SpotifyConnect.context";
 import { TCurrentTrack } from "../types";
+import { getAccessToken } from "../util";
 import { usePollingQuery } from "./usePollingQuery";
 
 const useContextWithError = <T>(context: Context<T>) => {
@@ -24,27 +21,22 @@ export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
   const { clientId, clientSecret, refreshToken, accessToken, setAccessToken } =
     useContextWithError(SpotifyConnectContext);
 
-  const basic = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+  const basic = useMemo(
+    () => Buffer.from(`${clientId}:${clientSecret}`).toString("base64"),
+    [clientId, clientSecret]
+  );
 
-  const getAccessToken = useCallback(async () => {
-    const response = await fetch(apiTokenEndpoint, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${basic}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        grant_type: "refresh_token",
-        refresh_token: refreshToken,
-      }).toString(),
-    });
+  useEffect(() => {
+    const fetchAndUpdateAccessToken = async () => {
+      if (!accessToken) {
+        const { access_token } = await getAccessToken(basic, refreshToken);
+        if (!access_token) throw new Error("Invalid access token");
+        setAccessToken(access_token);
+      }
+    };
 
-    if (response.status === 401) {
-      throw new Error("Invalid refresh token");
-    }
-
-    return response.json();
-  }, [basic, clientId, clientSecret]);
+    fetchAndUpdateAccessToken();
+  }, [accessToken]);
 
   const queryFn = useCallback(async () => {
     const fetchCurrentTrack = async ({
@@ -52,11 +44,18 @@ export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
     }: {
       accessToken: string;
     }) => {
+      if (!accessToken) return;
+
       const response = await fetch(currentTrackEndpoint, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+
+      if (response.status === 401) {
+        setAccessToken(null);
+        return { is_playing: false };
+      }
 
       if (response.status === 204 || response.status > 400) {
         return { is_playing: false };
@@ -66,19 +65,11 @@ export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
     };
 
     if (!accessToken) {
-      const { access_token } = await getAccessToken();
-
-      if (!access_token) {
-        throw new Error("Invalid access token");
-      }
-
-      setAccessToken(access_token);
-
-      return fetchCurrentTrack({ accessToken: access_token });
+      return () => {};
     } else {
       return fetchCurrentTrack({ accessToken });
     }
-  }, [accessToken]);
+  }, [accessToken, basic, refreshToken]);
 
   return usePollingQuery<TCurrentTrack>(queryFn, refetchInterval);
 };

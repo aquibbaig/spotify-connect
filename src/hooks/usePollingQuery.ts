@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { isDocumentVisible } from "src/util";
 
 export function usePollingQuery<T>(
@@ -8,48 +8,58 @@ export function usePollingQuery<T>(
   const minimumInterval = 1000;
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const isFetchingRef = useRef<boolean>(false);
 
-  if (refetchInterval <= minimumInterval) {
-    return {
-      data: null,
-      loading: false,
-      error: new Error(
-        `Minimum accepted value of refetchInterval is ${minimumInterval}!`
-      ),
-    };
-  }
+  const [queryState, setQueryState] = useState<{
+    data: T | null;
+    loading: boolean;
+    error: Error | null;
+  }>({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
+  const launchQuery = useCallback(async () => {
+    if (isDocumentVisible() && !isFetchingRef.current) {
+      try {
+        const result = await queryFn();
+
+        setQueryState({ data: result, error: null, loading: false });
+      } catch (err) {
+        setQueryState({
+          error: err instanceof Error ? err : new Error(String(err)),
+          data: null,
+          loading: false,
+        });
+      } finally {
+        isFetchingRef.current = false;
+      }
+    }
+  }, [queryFn]);
 
   useEffect(() => {
-    async function launchQuery() {
-      if (isDocumentVisible()) {
-        setLoading(true);
-        try {
-          const result = await queryFn();
-          setData(result);
-        } catch (err) {
-          setError(err instanceof Error ? err : new Error(String(err)));
-        } finally {
-          setLoading(false);
-        }
-      }
+    if (refetchInterval <= minimumInterval) {
+      setQueryState({
+        data: null,
+        loading: false,
+        error: new Error(
+          `Minimum accepted value of refetchInterval is ${minimumInterval}!`
+        ),
+      });
+      return;
     }
 
     launchQuery();
     timerRef.current = setInterval(launchQuery, refetchInterval);
 
     return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
+      clearInterval(timerRef.current);
+      isFetchingRef.current = false;
     };
-  }, [refetchInterval, queryFn]);
+  }, [refetchInterval, launchQuery]);
 
   return {
-    data,
-    loading,
-    error,
+    ...queryState,
   };
 }
