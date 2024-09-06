@@ -4,6 +4,8 @@ type TSpotifyConnectContext = {
     clientId: string | undefined;
     clientSecret: string | undefined;
     refreshToken: string | undefined;
+    accessToken: string | undefined;
+    setAccessToken: React.Dispatch<React.SetStateAction<TSpotifyConnectContext["accessToken"]>>;
 };
 type TSpotifyTrack = {
     album: {

@@ -1,7 +1,13 @@
+import { apiTokenEndpoint } from "./constants";
+
 export type TSpotifyConnectContext = {
   clientId: string | undefined;
   clientSecret: string | undefined;
   refreshToken: string | undefined;
+  accessToken: string | undefined;
+  setAccessToken: React.Dispatch<
+    React.SetStateAction<TSpotifyConnectContext["accessToken"]>
+  >;
 };
 
 export type TSpotifyTrack = {
@@ -102,4 +108,27 @@ export type TParsedCurrentTrack = {
   } | null;
   timestamp: number | null;
   is_playing: boolean;
+};
+
+export const getAccessToken = async (
+  authToken: string,
+  refreshToken: string
+): Promise<{ access_token: string }> => {
+  const response = await fetch(apiTokenEndpoint, {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${authToken}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: refreshToken,
+    }).toString(),
+  });
+
+  if (response.status === 401) {
+    throw new Error("Invalid refresh token");
+  }
+
+  return response.json();
 };

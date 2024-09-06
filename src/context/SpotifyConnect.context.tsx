@@ -1,10 +1,12 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { TSpotifyConnectContext } from "../types";
 
 export const SpotifyConnectContext = createContext<TSpotifyConnectContext>({
   clientId: "",
   clientSecret: "",
   refreshToken: "",
+  accessToken: "",
+  setAccessToken: () => {},
 });
 
 export const SpotifyConnectContextProvider = ({
@@ -15,12 +17,17 @@ export const SpotifyConnectContextProvider = ({
 }: {
   children: React.ReactNode;
 } & TSpotifyConnectContext) => {
+  const [accessToken, setAccessToken] =
+    useState<TSpotifyConnectContext["accessToken"]>("");
+
   return (
     <SpotifyConnectContext.Provider
       value={{
         clientId,
         clientSecret,
         refreshToken,
+        accessToken,
+        setAccessToken,
       }}
     >
       {children}

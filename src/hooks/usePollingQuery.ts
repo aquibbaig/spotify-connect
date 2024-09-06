@@ -45,7 +45,7 @@ export function usePollingQuery<T>(
         clearInterval(timerRef.current);
       }
     };
-  }, [refetchInterval]);
+  }, [refetchInterval, queryFn]);
 
   return {
     data,
