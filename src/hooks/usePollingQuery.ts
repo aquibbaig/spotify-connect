@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { isDocumentVisible } from "src/util";
 
 export function usePollingQuery<T>(
-  queryFn: () => Promise<T>,
+  queryFn: (...args: any[]) => Promise<T>,
   refetchInterval = 10 * 1000
 ) {
   const minimumInterval = 1000;
@@ -22,27 +23,29 @@ export function usePollingQuery<T>(
   }
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const result = await queryFn();
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
-      } finally {
-        setLoading(false);
+    async function launchQuery() {
+      if (isDocumentVisible()) {
+        setLoading(true);
+        try {
+          const result = await queryFn();
+          setData(result);
+        } catch (err) {
+          setError(err instanceof Error ? err : new Error(String(err)));
+        } finally {
+          setLoading(false);
+        }
       }
     }
 
-    fetchData();
-    timerRef.current = setInterval(fetchData, refetchInterval);
+    launchQuery();
+    timerRef.current = setInterval(launchQuery, refetchInterval);
 
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
     };
-  }, [refetchInterval, queryFn]);
+  }, [refetchInterval]);
 
   return {
     data,
