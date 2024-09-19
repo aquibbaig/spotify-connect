@@ -9,8 +9,12 @@ npm i spotify-connect
 
 ## Currently supported APIs
 
-- **Currently Playing Track API:** Retrieve information about the track currently being played by a Spotify user.
+- **Get currently playing track:** Retrieve information about the track currently being played by a Spotify user.
+
   - Endpoint: [https://api.spotify.com/v1/me/player/currently-playing](https://api.spotify.com/v1/me/player/currently-playing)
+
+- **Get recently played tracks:** Retrieve the list of recently played tracks of a Spotify user.
+  - Endpoint: [`https://api.spotify.com/v1/me/player/recently-played`](https://api.spotify.com/v1/me/player/recently-played)
 
 ## Requirements
 
