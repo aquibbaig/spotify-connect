@@ -53,7 +53,11 @@ export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
     };
 
     if (!accessToken) {
-      return () => {};
+      return {
+        data: null,
+        loading: true,
+        error: null,
+      };
     } else {
       return fetchCurrentTrack({ accessToken });
     }

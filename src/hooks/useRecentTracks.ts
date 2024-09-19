@@ -64,7 +64,11 @@ export const useRecentTracks = (
     };
 
     if (!accessToken) {
-      return () => {};
+      return {
+        data: null,
+        loading: true,
+        error: null,
+      };
     } else {
       return fetchRecentTracks({ accessToken });
     }
