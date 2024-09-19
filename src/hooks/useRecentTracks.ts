@@ -1,13 +1,24 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { currentTrackEndpoint, queryRefetchInterval } from "../constants";
+import { recentTracksEndpoint } from "../constants";
 import { SpotifyConnectContext } from "../context/SpotifyConnect.context";
-import { TCurrentTrack } from "../types";
+import { TRecentTracks } from "../types";
 import { getAccessToken, useContextWithError } from "../util";
 import { usePollingQuery } from "./usePollingQuery";
 
-export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
+const RECENT_TRACKS_REFETCH_INTERVAL = 30 * 1000;
+
+export const useRecentTracks = (
+  refetchInterval = RECENT_TRACKS_REFETCH_INTERVAL,
+  limit = 5
+) => {
   const { clientId, clientSecret, refreshToken, accessToken, setAccessToken } =
     useContextWithError(SpotifyConnectContext);
+
+  if (limit > 20) {
+    throw new Error(
+      `Invalid limit provided limit=${limit}. It should not exceed 20.`
+    );
+  }
 
   const basic = useMemo(
     () => Buffer.from(`${clientId}:${clientSecret}`).toString("base64"),
@@ -27,14 +38,14 @@ export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
   }, [accessToken]);
 
   const queryFn = useCallback(async () => {
-    const fetchCurrentTrack = async ({
+    const fetchRecentTracks = async ({
       accessToken,
     }: {
       accessToken: string;
     }) => {
       if (!accessToken) return;
 
-      const response = await fetch(currentTrackEndpoint, {
+      const response = await fetch(`${recentTracksEndpoint}?limit=${limit}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -55,9 +66,9 @@ export const useCurrentTrack = (refetchInterval = queryRefetchInterval) => {
     if (!accessToken) {
       return () => {};
     } else {
-      return fetchCurrentTrack({ accessToken });
+      return fetchRecentTracks({ accessToken });
     }
   }, [accessToken, basic, refreshToken]);
 
-  return usePollingQuery<TCurrentTrack>(queryFn, refetchInterval);
+  return usePollingQuery<TRecentTracks>(queryFn, refetchInterval);
 };

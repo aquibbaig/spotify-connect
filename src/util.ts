@@ -1,3 +1,4 @@
+import { Context, useContext } from "react";
 import { apiTokenEndpoint } from "./constants";
 
 export const isDocumentVisible = (): boolean => {
@@ -33,4 +34,16 @@ export const getAccessToken = async (
   }
 
   return response.json();
+};
+
+export const useContextWithError = <T>(context: Context<T>) => {
+  const contextValue = useContext<T>(context);
+
+  if (!contextValue) {
+    throw new Error(
+      `useCurrentTrack must be used within a SpotifyConnectContextProvider`
+    );
+  }
+
+  return contextValue;
 };

@@ -90,6 +90,27 @@ type TCurrentTrack = {
     };
     is_playing: boolean;
 };
+type TRecentTracks = {
+    cursors: {
+        after: number;
+        before: number;
+    };
+    href: string;
+    items: {
+        context: {
+            type: string;
+            href: string;
+            uri: string;
+            external_urls: {
+                spotify: string;
+            };
+            played_at: string;
+            track: TSpotifyTrack;
+        };
+    }[];
+    limit: 20;
+    next: string;
+};
 type TParsedCurrentTrack = {
     track: {
         id: TSpotifyTrack["id"];
@@ -109,7 +130,7 @@ declare const parseCurrentTrack: (data: TCurrentTrack | undefined) => TParsedCur
 
 declare const SpotifyConnectContextProvider: ({ children, clientId, clientSecret, refreshToken, }: {
     children: React.ReactNode;
-} & TSpotifyConnectContext) => react_jsx_runtime.JSX.Element;
+} & Pick<TSpotifyConnectContext, "clientId" | "clientSecret" | "refreshToken">) => react_jsx_runtime.JSX.Element;
 
 declare const useCurrentTrack: (refetchInterval?: number) => {
     data: TCurrentTrack;
@@ -117,4 +138,10 @@ declare const useCurrentTrack: (refetchInterval?: number) => {
     error: Error | null;
 };
 
-export { SpotifyConnectContextProvider, type TSpotifyTrack, parseCurrentTrack, useCurrentTrack };
+declare const useRecentTracks: (refetchInterval?: number, limit?: number) => {
+    data: TRecentTracks;
+    loading: boolean;
+    error: Error | null;
+};
+
+export { SpotifyConnectContextProvider, type TSpotifyTrack, parseCurrentTrack, useCurrentTrack, useRecentTracks };
