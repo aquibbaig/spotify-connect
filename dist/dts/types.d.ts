@@ -102,9 +102,9 @@ export type TRecentTracks = {
             external_urls: {
                 spotify: string;
             };
-            played_at: string;
-            track: TSpotifyTrack;
         };
+        played_at: string;
+        track: TSpotifyTrack;
     }[];
     limit: 20;
     next: string;

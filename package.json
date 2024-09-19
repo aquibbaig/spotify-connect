@@ -1,7 +1,7 @@
 {
   "name": "spotify-connect",
   "description": "Get useful analytics from the spotify API in your React app",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
