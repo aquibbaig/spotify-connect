@@ -1,10 +1,10 @@
-import { TCurrentlyPlayingTrack, TParsedCurrentlyPlayingTrack } from './types';
+import { TCurrentTrack, TParsedCurrentTrack } from './types';
 
-export const currentlyPlayingEndpoint = `https://api.spotify.com/v1/me/player/currently-playing`;
+export const currentTrackEndpoint = `https://api.spotify.com/v1/me/player/currently-playing`;
 export const apiTokenEndpoint = `https://accounts.spotify.com/api/token`;
 export const queryRefetchInterval = 10*1000;
 
-export const parseCurrentlyPlayingTrack = (data: TCurrentlyPlayingTrack | undefined): TParsedCurrentlyPlayingTrack => {
+export const parseCurrentTrack = (data: TCurrentTrack | undefined): TParsedCurrentTrack => {
   if (!data || !data.item) {
     return {
       track: null,

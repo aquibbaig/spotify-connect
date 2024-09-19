@@ -1,13 +1,12 @@
-"use client";
-
-import { createContext } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { createContext, useState } from "react";
 import { TSpotifyConnectContext } from "../types";
 
 export const SpotifyConnectContext = createContext<TSpotifyConnectContext>({
   clientId: "",
   clientSecret: "",
   refreshToken: "",
+  accessToken: "",
+  setAccessToken: () => {},
 });
 
 export const SpotifyConnectContextProvider = ({
@@ -18,19 +17,20 @@ export const SpotifyConnectContextProvider = ({
 }: {
   children: React.ReactNode;
 } & TSpotifyConnectContext) => {
-  const queryClient = new QueryClient();
+  const [accessToken, setAccessToken] =
+    useState<TSpotifyConnectContext["accessToken"]>("");
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SpotifyConnectContext.Provider
-        value={{
-          clientId,
-          clientSecret,
-          refreshToken,
-        }}
-      >
-        {children}
-      </SpotifyConnectContext.Provider>
-    </QueryClientProvider>
+    <SpotifyConnectContext.Provider
+      value={{
+        clientId,
+        clientSecret,
+        refreshToken,
+        accessToken,
+        setAccessToken,
+      }}
+    >
+      {children}
+    </SpotifyConnectContext.Provider>
   );
 };

@@ -2,6 +2,10 @@ export type TSpotifyConnectContext = {
   clientId: string | undefined;
   clientSecret: string | undefined;
   refreshToken: string | undefined;
+  accessToken: string | undefined;
+  setAccessToken: React.Dispatch<
+    React.SetStateAction<TSpotifyConnectContext["accessToken"]>
+  >;
 };
 
 export type TSpotifyTrack = {
@@ -68,7 +72,7 @@ export type TSpotifyTrack = {
   uri: string;
 };
 
-export type TCurrentlyPlayingTrack = {
+export type TCurrentTrack = {
   timestamp: number;
   context: {
     external_urls: {
@@ -89,13 +93,13 @@ export type TCurrentlyPlayingTrack = {
   is_playing: boolean;
 };
 
-export type TParsedCurrentlyPlayingTrack = {
+export type TParsedCurrentTrack = {
   track: {
     id: TSpotifyTrack["id"];
     name: TSpotifyTrack["name"];
     artist: TSpotifyTrack["artists"];
-    album: TSpotifyTrack["album"]['name'];
-    image: TSpotifyTrack["album"]["images"][0]['url'];
+    album: TSpotifyTrack["album"]["name"];
+    image: TSpotifyTrack["album"]["images"][0]["url"];
     duration: TSpotifyTrack["duration_ms"];
     progress: number;
     uri: TSpotifyTrack["uri"];

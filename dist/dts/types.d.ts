@@ -1,12 +1,11 @@
-import * as react_jsx_runtime from 'react/jsx-runtime';
-import * as react_query from 'react-query';
-
-type TSpotifyConnectContext = {
+export type TSpotifyConnectContext = {
     clientId: string | undefined;
     clientSecret: string | undefined;
     refreshToken: string | undefined;
+    accessToken: string | undefined;
+    setAccessToken: React.Dispatch<React.SetStateAction<TSpotifyConnectContext["accessToken"]>>;
 };
-type TSpotifyTrack = {
+export type TSpotifyTrack = {
     album: {
         album_type: string;
         artists: [
@@ -69,7 +68,7 @@ type TSpotifyTrack = {
     type: string;
     uri: string;
 };
-type TCurrentlyPlayingTrack = {
+export type TCurrentTrack = {
     timestamp: number;
     context: {
         external_urls: {
@@ -89,13 +88,13 @@ type TCurrentlyPlayingTrack = {
     };
     is_playing: boolean;
 };
-type TParsedCurrentlyPlayingTrack = {
+export type TParsedCurrentTrack = {
     track: {
         id: TSpotifyTrack["id"];
         name: TSpotifyTrack["name"];
         artist: TSpotifyTrack["artists"];
-        album: TSpotifyTrack["album"]['name'];
-        image: TSpotifyTrack["album"]["images"][0]['url'];
+        album: TSpotifyTrack["album"]["name"];
+        image: TSpotifyTrack["album"]["images"][0]["url"];
         duration: TSpotifyTrack["duration_ms"];
         progress: number;
         uri: TSpotifyTrack["uri"];
@@ -103,13 +102,3 @@ type TParsedCurrentlyPlayingTrack = {
     timestamp: number | null;
     is_playing: boolean;
 };
-
-declare const parseCurrentlyPlayingTrack: (data: TCurrentlyPlayingTrack | undefined) => TParsedCurrentlyPlayingTrack;
-
-declare const SpotifyConnectContextProvider: ({ children, clientId, clientSecret, refreshToken, }: {
-    children: React.ReactNode;
-} & TSpotifyConnectContext) => react_jsx_runtime.JSX.Element;
-
-declare const useCurrentlyPlaying: (refetchInterval?: number) => react_query.UseQueryResult<TCurrentlyPlayingTrack, unknown>;
-
-export { SpotifyConnectContextProvider, type TSpotifyTrack, parseCurrentlyPlayingTrack, useCurrentlyPlaying };

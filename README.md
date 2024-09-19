@@ -25,7 +25,7 @@ To get started, you'll need the following:
 The response from the Spotify API can be parsed using the following method:
 
 ```javascript
-parseCurrentlyPlayingTrack(data)
+parseCurrentTrack(data)
 
 Returns:
 {
@@ -58,7 +58,7 @@ Returns:
 2. Now you can use the utilities in your components as follows.
 
 ```javascript
-  const { data } = useCurrentlyPlaying()
+  const { data } = useCurrentTrack()
 
   options: {
     refetchInterval: (milliseconds, default = 5000 or 5seconds)
