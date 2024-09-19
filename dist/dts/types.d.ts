@@ -88,6 +88,27 @@ export type TCurrentTrack = {
     };
     is_playing: boolean;
 };
+export type TRecentTracks = {
+    cursors: {
+        after: number;
+        before: number;
+    };
+    href: string;
+    items: {
+        context: {
+            type: string;
+            href: string;
+            uri: string;
+            external_urls: {
+                spotify: string;
+            };
+            played_at: string;
+            track: TSpotifyTrack;
+        };
+    }[];
+    limit: 20;
+    next: string;
+};
 export type TParsedCurrentTrack = {
     track: {
         id: TSpotifyTrack["id"];
