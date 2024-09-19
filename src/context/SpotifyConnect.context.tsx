@@ -16,7 +16,10 @@ export const SpotifyConnectContextProvider = ({
   refreshToken,
 }: {
   children: React.ReactNode;
-} & TSpotifyConnectContext) => {
+} & Pick<
+  TSpotifyConnectContext,
+  "clientId" | "clientSecret" | "refreshToken"
+>) => {
   const [accessToken, setAccessToken] =
     useState<TSpotifyConnectContext["accessToken"]>("");
 
