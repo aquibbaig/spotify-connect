@@ -1,7 +1,8 @@
 # spotify-connect
 
-Integrate Spotify analytics into your React application to provide real-time analytics.
-This guide demonstrates how to use the Spotify API to retrieve and parse data on the currently playing track in your React or React Server Components application.
+Fetch data in real time from Spotify APIs.
+
+This guide demonstrates how to retrieve data from the Spotify API (such as currently playing track) in a react application or server component.
 
 ```
 npm i spotify-connect
@@ -59,7 +60,9 @@ Returns:
 >
 ```
 
-2. Now you can use the utilities in your components as follows.
+2. Now you can use the utility in your component. You can configure when to invalidate stale data and refetch.
+
+
 
 ```javascript
   const { data } = useCurrentTrack()
