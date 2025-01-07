@@ -10,6 +10,6 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "esModuleInterop": true,
     "module": "ESNext",
-    "moduleResolution": "node"
+    "moduleResolution": "bundler"
   }
 }
